@@ -1,0 +1,302 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AB5A20FE1777778900EEE2BB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5A20FD1777778900EEE2BB /* Cocoa.framework */; };
+		AB5A21081777778900EEE2BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB5A21061777778900EEE2BB /* InfoPlist.strings */; };
+		AB5A210A1777778900EEE2BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5A21091777778900EEE2BB /* main.m */; };
+		AB5A210E1777778900EEE2BB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AB5A210C1777778900EEE2BB /* Credits.rtf */; };
+		AB5A21111777778900EEE2BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5A21101777778900EEE2BB /* AppDelegate.m */; };
+		AB5A21141777778900EEE2BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5A21121777778900EEE2BB /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AB5A20F91777778900EEE2BB /* FixEDID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FixEDID.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB5A20FD1777778900EEE2BB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		AB5A21001777778900EEE2BB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		AB5A21011777778900EEE2BB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AB5A21021777778900EEE2BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AB5A21051777778900EEE2BB /* FixEDID-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FixEDID-Info.plist"; sourceTree = "<group>"; };
+		AB5A21071777778900EEE2BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AB5A21091777778900EEE2BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AB5A210B1777778900EEE2BB /* FixEDID-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FixEDID-Prefix.pch"; sourceTree = "<group>"; };
+		AB5A210D1777778900EEE2BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		AB5A210F1777778900EEE2BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AB5A21101777778900EEE2BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AB5A21131777778900EEE2BB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AB5A20F61777778900EEE2BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB5A20FE1777778900EEE2BB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB5A20EE1777778900EEE2BB = {
+			isa = PBXGroup;
+			children = (
+				AB5A21031777778900EEE2BB /* FixEDID */,
+				AB5A20FC1777778900EEE2BB /* Frameworks */,
+				AB5A20FA1777778900EEE2BB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AB5A20FA1777778900EEE2BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB5A20F91777778900EEE2BB /* FixEDID.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB5A20FC1777778900EEE2BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB5A20FD1777778900EEE2BB /* Cocoa.framework */,
+				AB5A20FF1777778900EEE2BB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AB5A20FF1777778900EEE2BB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB5A21001777778900EEE2BB /* AppKit.framework */,
+				AB5A21011777778900EEE2BB /* CoreData.framework */,
+				AB5A21021777778900EEE2BB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		AB5A21031777778900EEE2BB /* FixEDID */ = {
+			isa = PBXGroup;
+			children = (
+				AB5A210F1777778900EEE2BB /* AppDelegate.h */,
+				AB5A21101777778900EEE2BB /* AppDelegate.m */,
+				AB5A21121777778900EEE2BB /* MainMenu.xib */,
+				AB5A21041777778900EEE2BB /* Supporting Files */,
+			);
+			path = FixEDID;
+			sourceTree = "<group>";
+		};
+		AB5A21041777778900EEE2BB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AB5A21051777778900EEE2BB /* FixEDID-Info.plist */,
+				AB5A21061777778900EEE2BB /* InfoPlist.strings */,
+				AB5A21091777778900EEE2BB /* main.m */,
+				AB5A210B1777778900EEE2BB /* FixEDID-Prefix.pch */,
+				AB5A210C1777778900EEE2BB /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AB5A20F81777778900EEE2BB /* FixEDID */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB5A21171777778900EEE2BB /* Build configuration list for PBXNativeTarget "FixEDID" */;
+			buildPhases = (
+				AB5A20F51777778900EEE2BB /* Sources */,
+				AB5A20F61777778900EEE2BB /* Frameworks */,
+				AB5A20F71777778900EEE2BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FixEDID;
+			productName = FixEDID;
+			productReference = AB5A20F91777778900EEE2BB /* FixEDID.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB5A20F01777778900EEE2BB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Andy Vandijck";
+			};
+			buildConfigurationList = AB5A20F31777778900EEE2BB /* Build configuration list for PBXProject "FixEDID" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AB5A20EE1777778900EEE2BB;
+			productRefGroup = AB5A20FA1777778900EEE2BB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AB5A20F81777778900EEE2BB /* FixEDID */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB5A20F71777778900EEE2BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB5A21081777778900EEE2BB /* InfoPlist.strings in Resources */,
+				AB5A210E1777778900EEE2BB /* Credits.rtf in Resources */,
+				AB5A21141777778900EEE2BB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB5A20F51777778900EEE2BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB5A210A1777778900EEE2BB /* main.m in Sources */,
+				AB5A21111777778900EEE2BB /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AB5A21061777778900EEE2BB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB5A21071777778900EEE2BB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AB5A210C1777778900EEE2BB /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB5A210D1777778900EEE2BB /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		AB5A21121777778900EEE2BB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB5A21131777778900EEE2BB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AB5A21151777778900EEE2BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AB5A21161777778900EEE2BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AB5A21181777778900EEE2BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FixEDID/FixEDID-Prefix.pch";
+				INFOPLIST_FILE = "FixEDID/FixEDID-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AB5A21191777778900EEE2BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FixEDID/FixEDID-Prefix.pch";
+				INFOPLIST_FILE = "FixEDID/FixEDID-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AB5A20F31777778900EEE2BB /* Build configuration list for PBXProject "FixEDID" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB5A21151777778900EEE2BB /* Debug */,
+				AB5A21161777778900EEE2BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB5A21171777778900EEE2BB /* Build configuration list for PBXNativeTarget "FixEDID" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB5A21181777778900EEE2BB /* Debug */,
+				AB5A21191777778900EEE2BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AB5A20F01777778900EEE2BB /* Project object */;
+}
