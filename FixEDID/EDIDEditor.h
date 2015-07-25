@@ -14,6 +14,8 @@
 
 #import "AppDelegate.h"
 
+extern NSInteger runAlertPanel(NSString *title, NSString *message, NSString *button1, NSString *button2, NSString *button3);
+
 @interface EDIDEditor : NSObject
 {
     IBOutlet NSArrayController *dataArray;

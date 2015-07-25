@@ -27,6 +27,7 @@
 
 #include "DisplayMergeNub.h"
 #include "KextVer.h"
+
 OSDefineMetaClassAndStructors(DisplayMergeNub, IOService)
 
 static bool haveCreatedRef = false;
@@ -121,14 +122,14 @@ DisplayMergeNub::MergeDictionaryIntoProvider(IOService * provider, OSDictionary 
         //
         while ( NULL != (dictionaryEntry = (const OSSymbol *)iter->getNextObject()) )
         {
-            const char *	str = NULL;
+            //const char *	str = NULL;
             OSDictionary *	sourceDictionary = NULL;
             OSDictionary *	providerDictionary = NULL;
             OSObject *		providerProperty = NULL;
 
             // Get the symbol name for debugging
             //
-            str = dictionaryEntry->getCStringNoCopy();
+            //str = dictionaryEntry->getCStringNoCopy();
 
             // Check to see if our destination already has the same entry.  If it does
             // we assume that it is a dictionary.  Perhaps we should check that
@@ -149,8 +150,8 @@ DisplayMergeNub::MergeDictionaryIntoProvider(IOService * provider, OSDictionary 
                 // a reference to it.  So, we need to make a copy of our provider's dictionary
                 //
                 OSDictionary *		localCopyOfProvidersDictionary;
-                UInt32			providerSize;
-                UInt32			providerSizeAfterMerge;
+                /*UInt32			providerSize;
+                UInt32			providerSizeAfterMerge;*/
 
                 localCopyOfProvidersDictionary = OSDictionary::withDictionary( providerDictionary, 0);
                 if ( localCopyOfProvidersDictionary == NULL )
@@ -160,7 +161,7 @@ DisplayMergeNub::MergeDictionaryIntoProvider(IOService * provider, OSDictionary 
 
                 // Get the size of our provider's dictionary so that we can check later whether it changed
                 //
-                providerSize = providerDictionary->getCapacity();
+                //providerSize = providerDictionary->getCapacity();
 
                 // Note that our providerDictionary *might* change
                 // between the time we copied it and when we write it out again.  If so, we will obviously overwrite anychanges
@@ -173,7 +174,7 @@ DisplayMergeNub::MergeDictionaryIntoProvider(IOService * provider, OSDictionary 
                     // could have changed, but this gives us a first approximation.  We're not doing anything with this result, although we could
                     // remerge
                     //
-                    providerSizeAfterMerge = providerDictionary->getCapacity();
+                    //providerSizeAfterMerge = providerDictionary->getCapacity();
 
                     result = provider->setProperty( dictionaryEntry, localCopyOfProvidersDictionary );
                     if ( !result )
@@ -229,14 +230,14 @@ DisplayMergeNub::MergeDictionaryIntoDictionary(OSDictionary * parentSourceDictio
 
     while (NULL != (keyObject = OSDynamicCast(OSSymbol, srcIterator->getNextObject())))
     {
-        const char *	str;
+        //const char *	str;
         OSDictionary *	childSourceDictionary = NULL;
         OSDictionary *	childTargetDictionary = NULL;
         OSObject *	childTargetObject = NULL;
 
         // Get the symbol name for debugging
         //
-        str = keyObject->getCStringNoCopy();
+        //str = keyObject->getCStringNoCopy();
 
         // Check to see if our destination already has the same entry.
         //
@@ -259,8 +260,8 @@ DisplayMergeNub::MergeDictionaryIntoDictionary(OSDictionary * parentSourceDictio
 			// a reference to it.  So, we need to make a copy of our target's dictionary
 			//
 			OSDictionary *		localCopyOfTargetDictionary;
-			UInt32			targetSize;
-			UInt32			targetSizeAfterMerge;
+			/*UInt32			targetSize;
+			UInt32			targetSizeAfterMerge;*/
 			
 			localCopyOfTargetDictionary = OSDictionary::withDictionary( childTargetDictionary, 0);
 			if ( localCopyOfTargetDictionary == NULL )
@@ -270,7 +271,7 @@ DisplayMergeNub::MergeDictionaryIntoDictionary(OSDictionary * parentSourceDictio
 			
 			// Get the size of our provider's dictionary so that we can check later whether it changed
 			//
-			targetSize = childTargetDictionary->getCapacity();
+			//targetSize = childTargetDictionary->getCapacity();
 			
 			// Note that our targetDictionary *might* change
 			// between the time we copied it and when we write it out again.  If so, we will obviously overwrite anychanges
@@ -282,7 +283,7 @@ DisplayMergeNub::MergeDictionaryIntoDictionary(OSDictionary * parentSourceDictio
 				// could have changed, but this gives us a first approximation.  We're not doing anything with this result, although we could
 				// remerge
 				//
-				targetSizeAfterMerge = childTargetDictionary->getCapacity();
+				//targetSizeAfterMerge = childTargetDictionary->getCapacity();
 				
 				result = parentTargetDictionary->setObject(keyObject, localCopyOfTargetDictionary);
 				if ( !result )

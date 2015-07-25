@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(NSRect)frame colorX:(float *)xVals colorY:(float *)yVals
 {
-    [super initWithFrame:frame];
+    self = [super initWithFrame:frame];
 
     xValsB[0] = xVals[0]; // Rx
     xValsB[1] = xVals[1]; // Gx

@@ -6,10 +6,16 @@
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>FixEDID V2.4.0, copyright © 2013-2014 AnV Software. All rights reserved.</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>FixEDID.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>FixEDID Help</string>
 	<key>CFBundleIconFile</key>
 	<string>FixEDID.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.AnV.Software.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -22,18 +28,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>2.4.0</string>
-	<key>CFBundleHelpBookName</key>
-	<string>FixEDID Help</string>
-	<key>CFBundleHelpBookFolder</key>
-	<string>FixEDID.help</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2013-2014 AnV Software. All rights reserved.</string>
-	<key>CFBundleGetInfoString</key>
-	<string>FixEDID V2.4.0, copyright © 2013-2014 AnV Software. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

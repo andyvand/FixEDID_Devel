@@ -115,7 +115,11 @@ int LEDDevice = 37430;
 
 -(void)loadEDIDEditor:(id)sender
 {
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 0x1080
+    [[NSBundle mainBundle] loadNibNamed:@"EDIDEditor" owner:self topLevelObjects:nil];
+#else
     [NSBundle loadNibNamed:@"EDIDEditor" owner:self];
+#endif
 }
 
 -(int)CalcGCD:(int)a vert:(int)b
@@ -206,7 +210,7 @@ int LEDDevice = 37430;
     ResDataEntry[14] = 0x00;
     ResDataEntry[15] = 0x00;
 
-    tempData = [[NSData alloc] initWithBytes:ResDataEntry length:sizeof(ResDataEntry)];
+    tempData = [NSData dataWithBytes:ResDataEntry length:sizeof(ResDataEntry)];
     [ResDataArray addObject:tempData];
 
     ++ResCnt;
@@ -241,9 +245,10 @@ int LEDDevice = 37430;
 
     [self GetScreenVendorDevice:self];
 
-    [VersionString setStringValue:[[NSString alloc] initWithFormat:@"FixEDID V%4.2f", FixEDIDVersionNumber]];
+    [VersionString setStringValue:[NSString stringWithFormat:@"FixEDID V%4.2f", FixEDIDVersionNumber]];
 
-    [ResolutionCount setStringValue:[NSString stringWithFormat:@"%u Resolutions", (unsigned int)ResCnt]];
+    if (ResolutionCount)
+        [ResolutionCount setStringValue:[NSString stringWithFormat:@"%u Resolutions", (unsigned int)ResCnt]];
 }
 
 -(int)hex2int:(const char *)s
@@ -354,6 +359,8 @@ int LEDDevice = 37430;
             DescriptorSet = YES;
         }
     }
+
+    printf("Descriptor is set: %u\n", (unsigned int)DescriptorSet);
 }
 
 -(unsigned char)make_checksum:(unsigned char *)x
@@ -501,7 +508,7 @@ int LEDDevice = 37430;
 
     if (EDIDFileOpened == NO)
     {
-        NSRunAlertPanel(@"Couldn't run!", @"Open an EDID file first!", @"OK", nil, nil);
+        runAlertPanel(@"Couldn't run!", @"Open an EDID file first!", @"OK", nil, nil);
 
         return;
     }
@@ -622,6 +629,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, iMac_descriptor, sizeof(iMac_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
 
@@ -747,6 +756,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, MBP_descriptor, sizeof(MBP_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
 
@@ -872,6 +883,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, CHD_name_descriptor, sizeof(CHD_name_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
 
@@ -962,6 +975,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, CHD_serial_descriptor, sizeof(CHD_serial_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
 
@@ -1087,6 +1102,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, TDB_name_descriptor, sizeof(TDB_name_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
             
@@ -1177,6 +1194,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, TDB_serial_descriptor, sizeof(TDB_serial_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
 
@@ -1302,6 +1321,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, LED_name_descriptor, sizeof(LED_name_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
             
@@ -1392,6 +1413,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, LED_serial_descriptor, sizeof(LED_serial_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
 
@@ -1533,6 +1556,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor2, iMacRetina_descriptor, sizeof(iMacRetina_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
                 
                 if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 0) &&
@@ -1542,6 +1567,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, iMacRetina_descriptor, sizeof(iMacRetina_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
             
@@ -1667,6 +1694,8 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, MBA_descriptor, sizeof(MBA_descriptor));
                     DescriptorSet = YES;
+
+                    printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
             
@@ -2089,7 +2118,7 @@ int LEDDevice = 37430;
 
         if (!file)
         {
-            NSRunAlertPanel(@"Open EDID file failed!", @"Open failed!", @"OK", nil, nil);
+            runAlertPanel(@"Open EDID file failed!", @"Open failed!", @"OK", nil, nil);
             
             EDIDFileOpened = NO;
             [EDIDPath setStringValue:@""];
@@ -2102,7 +2131,7 @@ int LEDDevice = 37430;
 
         if (ESize == 0)
         {
-            NSRunAlertPanel(@"Open EDID file failed!", @"File is empty!", @"OK", nil, nil);
+            runAlertPanel(@"Open EDID file failed!", @"File is empty!", @"OK", nil, nil);
 
             EDIDFileOpened = NO;
             [EDIDPath setStringValue:@"Open an EDID file"];
@@ -2116,7 +2145,7 @@ int LEDDevice = 37430;
 
         if (!EData)
         {
-            NSRunAlertPanel(@"Open EDID file failed!", @"Memory allocation error!", @"OK", nil, nil);
+            runAlertPanel(@"Open EDID file failed!", @"Memory allocation error!", @"OK", nil, nil);
             
             EDIDFileOpened = NO;
             [EDIDPath setStringValue:@"Open an EDID file"];
@@ -2135,7 +2164,7 @@ int LEDDevice = 37430;
 
         if (ESize == 0)
         {
-            NSRunAlertPanel(@"Open EDID file failed!", @"EDID data is smaller than 128B!", @"OK", nil, nil);
+            runAlertPanel(@"Open EDID file failed!", @"EDID data is smaller than 128B!", @"OK", nil, nil);
 
             EDIDFileOpened = NO;
             [EDIDPath setStringValue:@"Open an EDID file"];
@@ -2161,6 +2190,9 @@ int LEDDevice = 37430;
     
             free(EData);
 
+            if (CurVal == 0)
+                return;
+
             EData = malloc(CurVal);
             memcpy(EData, REData, CurVal);
 
@@ -2175,7 +2207,7 @@ int LEDDevice = 37430;
 
             if (ESize == 0)
             {
-                NSRunAlertPanel(@"Open EDID file failed!", @"EDID data is smaller than 128B!", @"OK", nil, nil);
+                runAlertPanel(@"Open EDID file failed!", @"EDID data is smaller than 128B!", @"OK", nil, nil);
                 
                 EDIDFileOpened = NO;
                 [EDIDPath setStringValue:@"Open an EDID file"];
@@ -2188,7 +2220,7 @@ int LEDDevice = 37430;
 
             if (memcmp(EDIDStructure->Header, EDID_Header, sizeof(EDID_Header)))
             {
-                NSRunAlertPanel(@"Open EDID file failed!", @"EDID header is incorrect!", @"OK", nil, nil);
+                runAlertPanel(@"Open EDID file failed!", @"EDID header is incorrect!", @"OK", nil, nil);
 
                 EDIDFileOpened = NO;
                 [EDIDPath setStringValue:@"Open an EDID file"];
@@ -2249,9 +2281,9 @@ int LEDDevice = 37430;
 
 - (void)SelectDisplay:(id)sender
 {
-    devId = [[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"DisplayProductID"];
-    venId = [[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"DisplayVendorID"];
-    displayPref = [[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"IODisplayPrefsKey"];
+    devId = [(NSDictionary *)[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"DisplayProductID"];
+    venId = [(NSDictionary *)[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"DisplayVendorID"];
+    displayPref = [(NSDictionary *)[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"IODisplayPrefsKey"];
     devDecId = [NSString stringWithFormat:@"%d",[self hex2int:[devId UTF8String]]];
     venDecId = [NSString stringWithFormat:@"%d",[self hex2int:[venId UTF8String]]];
     

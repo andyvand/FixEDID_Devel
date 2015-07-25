@@ -365,6 +365,9 @@ EDIDStruct_t *EDataStruct;
             checkskip = 128*(checksumblock);
             checksumptr = &EData[checkskip];
             curdataval = [self make_checksum:checksumptr];
+
+            printf("Checksum: %u\n", curdataval);
+
             checksumblock += 1;
         } else {
             curdataval = [self hex2uchar:[dataval cStringUsingEncoding:NSUTF8StringEncoding]];
@@ -553,6 +556,46 @@ EDIDStruct_t *EDataStruct;
     [self getHeader];
 }
 
+NSInteger runAlertPanel(NSString *title, NSString *message, NSString *button1, NSString *button2, NSString *button3)
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    NSModalResponse retval = 0;
+
+    if (alert != nil)
+    {
+        if (title != nil)
+        {
+            [alert setMessageText:title];
+        }
+
+        if (message != nil)
+        {
+            [alert setInformativeText:message];
+        }
+        
+        if (button1 != nil)
+        {
+            [alert addButtonWithTitle:button1];
+        }
+
+        if (button2 != nil)
+        {
+            [alert addButtonWithTitle:button2];
+        }
+
+        if (button3 != nil)
+        {
+            [alert addButtonWithTitle:button3];
+        }
+
+        retval = [alert runModal];
+
+        [alert release];
+    }
+
+    return (NSInteger)retval;
+}
+
 -(void)setSerialData:(id)sender
 {
     unsigned char Manufacturer[2];
@@ -619,7 +662,7 @@ EDIDStruct_t *EDataStruct;
 
     if ((Week > 54) && (Week != 255))
     {
-        NSRunAlertPanel(@"Week is invalid!", @"Setting week and year to 0xFF...", @"OK", nil, nil);
+        runAlertPanel(@"Week is invalid!", @"Setting week and year to 0xFF...", @"OK", nil, nil);
 
         Week = 255;
         Year = 255;
@@ -629,7 +672,7 @@ EDIDStruct_t *EDataStruct;
     {
         if (Week != 255)
         {
-            NSRunAlertPanel(@"Year is invalid!", @"Setting week and year to 0xFF...", @"OK", nil, nil);
+            runAlertPanel(@"Year is invalid!", @"Setting week and year to 0xFF...", @"OK", nil, nil);
 
             Week = 255;
             Year = 255;
@@ -757,10 +800,13 @@ EDIDStruct_t *EDataStruct;
             curcol = 0;
         }
 
-        [dataDict setObject:data[curdone] forKey:[self determineColumnName:curcol]];
+        if (data[curdone])
+        {
+            [dataDict setObject:data[curdone] forKey:[self determineColumnName:curcol]];
 
-        ++curcol;
-        ++curdone;
+            ++curcol;
+            ++curdone;
+        }
     }
 
     dataValueList = [dataArray arrangedObjects];
@@ -818,7 +864,7 @@ EDIDStruct_t *EDataStruct;
 
     if (((bitspercolor < 6) && (bitspercolor != 0)) || (bitspercolor >= 11))
     {
-        NSRunAlertPanel(@"Bits per color bad!", [NSString stringWithFormat:@"%u is not acceptable, must be between 6 and 10 or 0", bitspercolor], @"OK", nil, nil);
+        runAlertPanel(@"Bits per color bad!", [NSString stringWithFormat:@"%u is not acceptable, must be between 6 and 10 or 0", bitspercolor], @"OK", nil, nil);
 
         return;
     }
@@ -865,7 +911,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sDFP:(id)sender
 {
-    unsigned char DFPOn = (unsigned char)[sender state];
+    unsigned char DFPOn = (unsigned char)[(NSButton *)sender state];
     NSString *FirstParam;
     unsigned char FP = 0;
     
@@ -883,7 +929,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sB2B:(id)sender
 {
-    unsigned char B2BOn = (unsigned char)[sender state];
+    unsigned char B2BOn = (unsigned char)[(NSButton *)sender state];
     NSString *FirstParam;
     unsigned char FP = 0;
 
@@ -903,7 +949,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sSerr:(id)sender
 {
-    unsigned char SerrOn = (unsigned char)[sender state];
+    unsigned char SerrOn = (unsigned char)[(NSButton *)sender state];
     NSString *FirstParam;
     unsigned char FP = 0;
     
@@ -921,7 +967,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sGreen:(id)sender
 {
-    unsigned char GreenOn = (unsigned char)[sender state];
+    unsigned char GreenOn = (unsigned char)[(NSButton *)sender state];
     NSString *FirstParam;
     unsigned char FP = 0;
     
@@ -941,7 +987,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sComp:(id)sender
 {
-    unsigned char CompOn = (unsigned char)[sender state];
+    unsigned char CompOn = (unsigned char)[(NSButton *)sender state];
     NSString *FirstParam;
     unsigned char FP = 0;
     
@@ -961,7 +1007,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sSep:(id)sender
 {
-    unsigned char SepOn = (unsigned char)[sender state];
+    unsigned char SepOn = (unsigned char)[(NSButton *)sender state];
     NSString *FirstParam;
     unsigned char FP = 0;
     
@@ -1032,7 +1078,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sDPMSOff:(id)sender
 {
-    unsigned char DPMSOffB = (unsigned char)[sender state];
+    unsigned char DPMSOffB = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     DPMSOffB = ((DPMSOffB & 1) << 5);
     unsigned char FBP = 0;
@@ -1050,7 +1096,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sDPMSSuspend:(id)sender
 {
-    unsigned char DPMSSuspendB = (unsigned char)[sender state];
+    unsigned char DPMSSuspendB = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     DPMSSuspendB = ((DPMSSuspendB & 1) << 6);
     unsigned char FBP = 0;
@@ -1068,7 +1114,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sDPMSStandby:(id)sender
 {
-    unsigned char DPMSStandbyB = (unsigned char)[sender state];
+    unsigned char DPMSStandbyB = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     DPMSStandbyB = ((DPMSStandbyB & 1) << 7);
     unsigned char FBP = 0;
@@ -1086,7 +1132,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sYCrCb444:(id)sender
 {
-    unsigned char YCrCb444B = (unsigned char)[sender state];
+    unsigned char YCrCb444B = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     YCrCb444B = ((YCrCb444B & 1) << 4);
     unsigned char FBP = 0;
@@ -1104,7 +1150,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sYCrCb422:(id)sender
 {
-    unsigned char YCrCb422B = (unsigned char)[sender state];
+    unsigned char YCrCb422B = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     YCrCb422B = ((YCrCb422B & 1) << 3);
     unsigned char FBP = 0;
@@ -1147,7 +1193,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)ssRGBPC:(id)sender
 {
-    unsigned char RGBPCB = (unsigned char)[sender state];
+    unsigned char RGBPCB = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     RGBPCB = ((RGBPCB & 1) << 2);
     unsigned char FBP = 0;
@@ -1165,7 +1211,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sDetPT:(id)sender
 {
-    unsigned char DetPTB = (unsigned char)[sender state];
+    unsigned char DetPTB = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     DetPTB = ((DetPTB & 1) << 1);
     unsigned char FBP = 0;
@@ -1183,7 +1229,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sSuppGTF:(id)sender
 {
-    unsigned char SuppGTFB = (unsigned char)[sender state];
+    unsigned char SuppGTFB = (unsigned char)[(NSButton *)sender state];
     NSString *FifthBP;
     SuppGTFB = (SuppGTFB & 1);
     unsigned char FBP = 0;
@@ -1199,12 +1245,13 @@ EDIDStruct_t *EDataStruct;
     [self writeDataTable:&FifthBP offset:24 length:1];
 }
 
+ColorRender *colorView = nil;
+
 -(void)getChroma
 {
     NSString *chromaData[10];
-    unsigned char chromaB[10];
+    unsigned char chromaB[10] = { 0 };
     NSRect colorRect = NSMakeRect(0, 0, 256, 256);
-    ColorRender *colorView;
     unsigned long redXB = 0;
     unsigned long redYB = 0;
     unsigned long greenXB = 0;
@@ -1221,8 +1268,8 @@ EDIDStruct_t *EDataStruct;
     float blueYf = 0;
     float whiteXf = 0;
     float whiteYf = 0;
-    float colorXSet[3];
-    float colorYSet[3];
+    float colorXSet[3] = { 0, 0, 0   };
+    float colorYSet[3] = { 0, 0, 0 };
 
     [self readDataTable:chromaData offset:25 length:10];
 
@@ -1553,7 +1600,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)setEstaBit:(id)sender
 {
-    unsigned char bitOn = (unsigned char)[sender state];
+    unsigned char bitOn = (unsigned char)[(NSButton *)sender state];
     unsigned int bitnr = (unsigned int)[sender tag];
     unsigned char bytenr = 0;
     unsigned char curmask = 0;
@@ -1916,7 +1963,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)setEsta3Bit:(id)sender
 {
-    unsigned char bitOn = (unsigned char)[sender state];
+    unsigned char bitOn = (unsigned char)[(NSButton *)sender state];
     unsigned int bitnr = (unsigned int)[sender tag];
     unsigned char bytenr = 0;
     unsigned char curmask = 0;
@@ -2085,15 +2132,15 @@ EDIDStruct_t *EDataStruct;
 
 -(void)getStandardRes
 {
-    NSString *stdResData[16];
-    unsigned char stdResDataB[16];
+    NSString *stdResData[16] = { nil };
+    unsigned char stdResDataB[16] = { 0 };
     NSString *minorVer = nil;
     unsigned char minorVerB = 0;
-    unsigned int standX[8];
-    unsigned int standY[8];
-    unsigned int standHz[8];
-    unsigned char standEnabled[8];
-    unsigned char standAR[8];
+    unsigned int standX[8] = { 0 };
+    unsigned int standY[8] = { 0 };
+    unsigned int standHz[8] = { 0 };
+    unsigned char standEnabled[8] = { 0 };
+    unsigned char standAR[8] = { 0 };
     unsigned char cnt = 0;
     
     [self readDataTable:&minorVer offset:19 length:1];
@@ -2381,14 +2428,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2412,14 +2459,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2443,14 +2490,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2474,14 +2521,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2505,14 +2552,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2536,14 +2583,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2567,14 +2614,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2598,14 +2645,14 @@ EDIDStruct_t *EDataStruct;
             
             if ((X < 256) || (X > 2288))
             {
-                NSRunAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
+                runAlertPanel(@"Horizontal resolution bad!", @"Horizontal resolution must be between 256 and 2288!", @"OK", nil, nil);
                 
                 return;
             }
             
             if ((HZ < 60) || (HZ > 123))
             {
-                NSRunAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
+                runAlertPanel(@"Refresh rate bad!", @"Refresh rate must be between 60 and 123 Hz!", @"OK", nil, nil);
                 
                 return;
             }
@@ -2629,7 +2676,7 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sStandardEnab:(id)sender
 {
-    int enabled = (int)[sender state];
+    int enabled = (int)[(NSButton *)sender state];
     int fieldnr = (int)[sender tag];
     BOOL isEnabled = NO;
     NSString *stddis[2];
@@ -2782,12 +2829,12 @@ EDIDStruct_t *EDataStruct;
 
 -(void)getCVT3B
 {
-    NSString *CVTData[12];
-    unsigned char CVTDataB[12];
-    int AR[4];
-    int Width[4];
-    int Height[4];
-    int PrefHz[4];
+    NSString *CVTData[12] = { nil };
+    unsigned char CVTDataB[12] = { 0 };
+    int AR[4] = { 0, 0, 0, 0 };
+    int Width[4] = { 0, 0, 0, 0 };
+    int Height[4] = { 0, 0, 0, 0 };
+    int PrefHz[4] = { 0, 0, 0, 0 };
 
     [self readDataTable:CVTData offset:(StartOffset + 6) length:12];
 
@@ -3055,8 +3102,8 @@ EDIDStruct_t *EDataStruct;
 
 -(void)sCVT3B:(id)sender
 {
-    NSString *CVTData[3];
-    unsigned char CVTDataB[3];
+    NSString *CVTData[3] = { nil, nil, nil };
+    unsigned char CVTDataB[3] = { 0, 0, 0 };
     int blocknr = (int)[sender tag];
     int height = 0;
     int AR = 0;
@@ -3073,7 +3120,7 @@ EDIDStruct_t *EDataStruct;
             height = [CVTH_1 intValue];
             if ((height > 8192) || (height < 2))
             {
-                NSRunAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
+                runAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
 
                 return;
             }
@@ -3116,7 +3163,7 @@ EDIDStruct_t *EDataStruct;
             height = [CVTH_2 intValue];
             if ((height > 8192) || (height < 2))
             {
-                NSRunAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
+                runAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
                 
                 return;
             }
@@ -3159,7 +3206,7 @@ EDIDStruct_t *EDataStruct;
             height = [CVTH_3 intValue];
             if ((height > 8192) || (height < 2))
             {
-                NSRunAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
+                runAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
                 
                 return;
             }
@@ -3202,7 +3249,7 @@ EDIDStruct_t *EDataStruct;
             height = [CVTH_4 intValue];
             if ((height > 8192) || (height < 2))
             {
-                NSRunAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
+                runAlertPanel(@"Vertical resolution is bad!", @"Resolution must be between 2 and 8192", @"OK", nil, nil);
                 
                 return;
             }
@@ -3363,7 +3410,7 @@ EDIDStruct_t *EDataStruct;
 -(void)sDetailed:(id)sender
 {
     int detailedSelect = (int)[sender selectedTag];
-    NSString *detailData[18];
+    NSString *detailData[18] = { NULL };
 
     if (CurrentDetailed == detailedSelect)
     {
