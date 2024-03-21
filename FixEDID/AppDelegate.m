@@ -130,6 +130,7 @@ int LEDDevice = 37430;
 - (void)DetermineAspectRatio
 {
     unsigned char *descriptor = NULL;
+    NSString *DevCerts = @"-K";
     int hres = 0;
     int vres = 0;
     int gcd = 0;
@@ -496,7 +497,7 @@ int LEDDevice = 37430;
     NSAlert *alert;
     NSString *errorstring;
 #endif
-
+    NSString *DevCerts = [NSString stringWithFormat:@"-K%@", [[[NSBundle mainBundle] resourcePath] stringsByAppendingPaths:@"DevCerts.p12"]];
     EDIDStructure = (EDIDStruct_t *)EData;
 
     if ((!memcmp(EDIDStructure->Header, EDID_Header, sizeof(EDID_Header))) && (ESize > 0))
@@ -1843,6 +1844,13 @@ int LEDDevice = 37430;
     
 
     [DriverDict writeToFile:NewDisplayDriverPath atomically:YES];
+
+    task = [NSTask  new];
+    pipe = [NSPipe pipe];
+    [task setLaunchPath:@"/bin/sh"];
+    [task setArguments:[NSArray arrayWithObjects:[[[NSBundle mainBundle] resourcePath] stringsByAppendingPaths:@"ldid"], DevCerts, @"-U274905", @"-s", NewDisplayDriverPath , nil]];
+    [task setStandardOutput:pipe];
+    [task launch];
 }
 
 -(void)SetRawEDID:(id)sender
@@ -2238,6 +2246,7 @@ int LEDDevice = 37430;
 
 -(void)GetScreenVendorDevice:(id)sender
 {
+#if !defined(__arm64__) && !defined(__aarch64__)
     displayInfo = [[NSMutableDictionary alloc] init];
     displayArray = [[NSMutableArray alloc] init];
     
@@ -2247,21 +2256,21 @@ int LEDDevice = 37430;
     [task setArguments:[NSArray arrayWithObjects:@"-c", @"ioreg -lxw0 |  grep IODisplayPrefsKey | cut -d\"=\" -f2 | cut -d\"\\\"\" -f2",  nil]];
     [task setStandardOutput:pipe];
     [task launch];
-    
+
     outStr = [[[NSString alloc] initWithData:[[pipe fileHandleForReading] readDataToEndOfFile] encoding:NSUTF8StringEncoding] autorelease];
     outStr = [outStr substringToIndex:[outStr length]-1];
-    
+        
     temparray = [NSArray arrayWithArray:[outStr componentsSeparatedByString:@"\n"]];
     [Displays removeAllItems];
     for (int i = 0; i < temparray.count ; i++) {
         tmp = [temparray objectAtIndex:i];
         [displayArray addObject:
-         [NSDictionary dictionaryWithObjectsAndKeys:
-          /*                                    Value                                 ||        Key       */
-          tmp,                                                                          @"IODisplayPrefsKey",
-          [[[tmp lastPathComponent] componentsSeparatedByString:@"-"] objectAtIndex:1], @"DisplayVendorID",
-          [[[tmp lastPathComponent] componentsSeparatedByString:@"-"] objectAtIndex:2], @"DisplayProductID",
-          nil]];
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        /*                                    Value                                 ||        Key       */
+        tmp,                                                                          @"IODisplayPrefsKey",
+        [[[tmp lastPathComponent] componentsSeparatedByString:@"-"] objectAtIndex:1], @"DisplayVendorID",
+        [[[tmp lastPathComponent] componentsSeparatedByString:@"-"] objectAtIndex:2], @"DisplayProductID",
+        nil]];
         [Displays addItemWithTitle:[NSString stringWithFormat:@"Display 0x%@:0x%@",
                                     [[[tmp lastPathComponent] componentsSeparatedByString:@"-"] objectAtIndex:1],
                                     [[[tmp lastPathComponent] componentsSeparatedByString:@"-"] objectAtIndex:2]]];
@@ -2274,13 +2283,14 @@ int LEDDevice = 37430;
         }
         [ScreenCount setStringValue:TotalNumberDisplays];
     }
-    
     [Displays selectItemAtIndex:0];
     [self SelectDisplay:Displays];
+#endif /* !defined(__arm64__) && !defined(__aarch64__) */
 }
 
 - (void)SelectDisplay:(id)sender
 {
+#if !defined(__arm64__) && !defined(__aarch64__)
     devId = [(NSDictionary *)[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"DisplayProductID"];
     venId = [(NSDictionary *)[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"DisplayVendorID"];
     displayPref = [(NSDictionary *)[displayArray objectAtIndex:[sender selectedTag]] objectForKey:@"IODisplayPrefsKey"];
@@ -2311,5 +2321,6 @@ int LEDDevice = 37430;
 
         displayclass = 2;
     }
+#endif
 }
 @end

@@ -4,12 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>DisplayMergeNub.xcscheme</key>
+		<key>All.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>FixEDID.xcscheme</key>
+		<key>DisplayMergeNub.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>FixEDID.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
@@ -17,12 +22,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>AB5A20F81777778900EEE2BB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>ABA0F438177D9D1F00116CFE</key>
+		<key>A9EF0C381B6437CE00669F46</key>
 		<dict>
 			<key>primary</key>
 			<true/>
