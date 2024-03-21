@@ -237,7 +237,6 @@
         <window title="EDID Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="370" y="280" width="472" height="431"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>
             <value key="minSize" type="size" width="402" height="270"/>
@@ -266,7 +265,7 @@
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" id="2Y0-XH-rmK">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" id="2Y0-XH-rmK">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -281,7 +280,7 @@
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Text" id="zeL-mI-iET">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" title="Text" id="zeL-mI-iET">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -296,7 +295,7 @@
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="2vJ-2v-I0z">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="2vJ-2v-I0z">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -311,7 +310,7 @@
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="Res-QI-KUP">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="Res-QI-KUP">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -321,12 +320,12 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexD" id="P6x-s0-iQ2"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="40" minWidth="10" maxWidth="3.4028234663852886e+38" id="ZfS-cr-hr9">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="ZfS-cr-hr9">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="4">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="DFi-Te-NgI">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="DFi-Te-NgI">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -336,12 +335,12 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexE" id="Y57-fi-oL9"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="40" minWidth="10" maxWidth="3.4028234663852886e+38" id="m5z-ml-38h">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="m5z-ml-38h">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="5">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="bO9-aa-Tgx">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="bO9-aa-Tgx">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -351,12 +350,12 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexF" id="bdv-Is-iA9"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="40" minWidth="10" maxWidth="3.4028234663852886e+38" id="atk-87-JuG">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="atk-87-JuG">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="6">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="bWc-1j-dw8">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="bWc-1j-dw8">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -366,12 +365,12 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexG" id="QDC-Ch-r0t"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="40" minWidth="10" maxWidth="3.4028234663852886e+38" id="jhN-fX-3kQ">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="jhN-fX-3kQ">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="7">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="nlN-P3-JvR">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="nlN-P3-JvR">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -381,12 +380,12 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexH" id="laT-6a-vbm"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="40" minWidth="10" maxWidth="3.4028234663852886e+38" id="ZyK-nY-VR6">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="ZyK-nY-VR6">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="8">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="Pce-xk-SwD">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="Pce-xk-SwD">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -396,12 +395,12 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexI" id="Pix-ih-TVe"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="40" minWidth="10" maxWidth="3.4028234663852886e+38" id="tvN-xk-DcB">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="tvN-xk-DcB">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="9">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="20O-WV-Ezk">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" alignment="left" title="Text Cell" id="20O-WV-Ezk">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -414,6 +413,7 @@
                                     </tableColumns>
                                     <connections>
                                         <action selector="setEDIDDetailView:" target="raJ-ec-2jQ" id="oya-3o-XT7"/>
+                                        <outlet property="delegate" destination="raJ-ec-2jQ" id="CbW-1o-wW6"/>
                                     </connections>
                                 </tableView>
                             </subviews>
@@ -473,6 +473,9 @@
                     </button>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="raJ-ec-2jQ" id="ehK-QX-bdG"/>
+            </connections>
             <point key="canvasLocation" x="56" y="-83"/>
         </window>
         <window title="CVT 3 Byte Descriptor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="OTl-zJ-r9R">
@@ -2621,6 +2624,7 @@
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="472" y="-1561"/>
         </window>
         <window title="EDID Chromacity" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="jbZ-HB-8n9">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -2904,6 +2908,7 @@
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-358" y="-1626"/>
         </window>
         <window title="Color Digital" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="3sa-UY-gPR">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -3114,6 +3119,7 @@
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-458" y="-1983"/>
         </window>
         <window title="EDID V1.4 Digital" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="ygk-Al-v7B">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -3189,6 +3195,7 @@
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-458" y="-1815"/>
         </window>
         <window title="EDID Basic Paramaters" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="eOi-Xc-Lrf">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -3230,7 +3237,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="PPA-1g-MO2">
                             <rect key="frame" x="1" y="1" width="338" height="148"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k1b-gl-1As">
                                     <rect key="frame" x="0.0" y="0.0" width="338" height="148"/>
@@ -3363,7 +3370,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs6-by-tPh">
-                                    <rect key="frame" x="138.5" y="8" width="75" height="18"/>
+                                    <rect key="frame" x="139" y="8" width="75" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Suspend" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eOA-Gj-3jW">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3392,7 +3399,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="dMK-oM-D4P">
                             <rect key="frame" x="1" y="1" width="338" height="73"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tbB-jr-rae">
                                     <rect key="frame" x="0.0" y="0.0" width="338" height="73"/>
@@ -3444,6 +3451,7 @@
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-620" y="-3161"/>
         </window>
         <window title="EDID Serial" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="jZQ-AL-ezd">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -3559,6 +3567,7 @@
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-208" y="-3097"/>
         </window>
         <window title="Edit version" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Dlo-pK-H2I">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -3620,6 +3629,7 @@
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-107" y="-2699"/>
         </window>
         <window title="Empty editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="8Cb-FZ-WxW">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -3641,6 +3651,7 @@
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-208" y="-2866"/>
         </window>
         <window title="Edit Header" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Kdc-lj-lzj">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
@@ -3745,6 +3756,7 @@
                     </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="-721" y="-3548"/>
         </window>
         <arrayController id="URb-Ab-VxH"/>
     </objects>

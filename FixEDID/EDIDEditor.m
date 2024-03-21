@@ -3693,6 +3693,7 @@ ColorRender *colorView = nil;
         [self getHeader];
 
         [editView setDocumentView:[headerView retain]];
+        [editView display];
 
         return;
     }
@@ -3702,6 +3703,7 @@ ColorRender *colorView = nil;
         [self getSerial];
         
         [editView setDocumentView:[serialView retain]];
+        [editView display];
 
         return;
     }
@@ -3712,6 +3714,7 @@ ColorRender *colorView = nil;
         [VersionMinor setStringValue:[NSString stringWithFormat:@"%d", EDataStruct->Version[1]]];
 
         [editView setDocumentView:[editVersionView retain]];
+        [editView display];
 
         return;
     }
