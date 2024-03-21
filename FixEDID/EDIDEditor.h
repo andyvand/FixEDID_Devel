@@ -308,6 +308,7 @@ extern NSInteger runAlertPanel(NSString *title, NSString *message, NSString *but
 -(IBAction)sDetailed:(id)sender;
 -(IBAction)setEsta3Bit:(id)sender;
 -(IBAction)sCVT3B:(id)sender;
+-(void)getSerial;
 -(void)readDataTable:(NSString **)data offset:(int)startpos length:(int)totallength;
 -(void)writeDataTable:(NSString **)data offset:(int)startpos length:(int)totallength;
 @end

@@ -1,6 +1,0 @@
-Target dependency graph (3 targets)
-Target 'All' in project 'FixEDID'
-➜ Explicit dependency on target 'DisplayMergeNub' in project 'FixEDID'
-➜ Explicit dependency on target 'FixEDID' in project 'FixEDID'
-Target 'FixEDID' in project 'FixEDID' (no dependencies)
-Target 'DisplayMergeNub' in project 'FixEDID' (no dependencies)

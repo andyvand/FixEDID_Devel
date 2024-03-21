@@ -299,7 +299,7 @@ EDIDStruct_t *EDataStruct;
 {
     int datasavecurrent = 0;
     int tenparts = 0;
-    NSString *dataval;
+    NSString *dataval = nil;
     unsigned char curdataval = 0;
     int checksumblock = 0;
     int checkskip = 0;
@@ -559,7 +559,7 @@ EDIDStruct_t *EDataStruct;
 NSInteger runAlertPanel(NSString *title, NSString *message, NSString *button1, NSString *button2, NSString *button3)
 {
     NSAlert *alert = [[NSAlert alloc] init];
-    NSModalResponse retval = 0;
+    NSInteger retval = 0;
 
     if (alert != nil)
     {
@@ -594,6 +594,54 @@ NSInteger runAlertPanel(NSString *title, NSString *message, NSString *button1, N
     }
 
     return (NSInteger)retval;
+}
+
+-(void)getSerial
+{
+    char *Manufacturer = NULL;
+    unsigned char ManufData[2];
+    unsigned short Model = 0;
+    unsigned long Serial = 0;
+    unsigned char buildWY[2];
+	
+    dataValueList = [dataArray arrangedObjects];
+    dataValueEntry = [dataValueList objectAtIndex:0];
+	
+    ManufData[0] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:8]] cStringUsingEncoding:NSUTF8StringEncoding]];
+    ManufData[1] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:9]] cStringUsingEncoding:NSUTF8StringEncoding]];
+	
+    Manufacturer = [self get_manufacturer_name:ManufData];
+	
+    [manufName setStringValue:[NSString stringWithFormat:@"%s", Manufacturer]];
+	
+    dataValueList = [dataArray arrangedObjects];
+    dataValueEntry = [dataValueList objectAtIndex:1];
+	
+    Model = ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:0]] cStringUsingEncoding:NSUTF8StringEncoding]] + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:1]] cStringUsingEncoding:NSUTF8StringEncoding]] << 8));
+	
+    [model setStringValue:[NSString stringWithFormat:@"%X", Model]];
+	
+    Serial = ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:2]] cStringUsingEncoding:NSUTF8StringEncoding]] + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:3]] cStringUsingEncoding:NSUTF8StringEncoding]] << 8)  + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:4]] cStringUsingEncoding:NSUTF8StringEncoding]] << 16) + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:5]] cStringUsingEncoding:NSUTF8StringEncoding]] << 24));
+	
+    [serial setStringValue:[NSString stringWithFormat:@"%lX", Serial]];
+	
+    buildWY[0] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:6]] cStringUsingEncoding:NSUTF8StringEncoding]];
+    buildWY[1] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:7]] cStringUsingEncoding:NSUTF8StringEncoding]];
+	
+    if ((buildWY[0] < 55) || (buildWY[1] == 0xff))
+    {
+        if (buildWY[1] > 0x0f)
+        {
+            if (buildWY[0] == 0xff)
+            {
+                [buildWeek setStringValue:[NSString stringWithFormat:@"%hhu", buildWY[0]]];
+                [buildYear setStringValue:[NSString stringWithFormat:@"%hhu", buildWY[1]]];
+            } else {
+                [buildWeek setStringValue:[NSString stringWithFormat:@"%hhu", buildWY[0]]];
+                [buildYear setStringValue:[NSString stringWithFormat:@"%u", (buildWY[1] + 1990)]];
+            }
+        }
+    }
 }
 
 -(void)setSerialData:(id)sender
@@ -687,54 +735,6 @@ NSInteger runAlertPanel(NSString *title, NSString *message, NSString *button1, N
     [self writeDataTable:weekyearsetdata offset:16 length:2];
 
     [self getSerial];
-}
-
--(void)getSerial
-{
-    char *Manufacturer = NULL;
-    unsigned char ManufData[2];
-    unsigned short Model = 0;
-    unsigned long Serial = 0;
-    unsigned char buildWY[2];
-
-    dataValueList = [dataArray arrangedObjects];
-    dataValueEntry = [dataValueList objectAtIndex:0];
-
-    ManufData[0] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:8]] cStringUsingEncoding:NSUTF8StringEncoding]];
-    ManufData[1] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:9]] cStringUsingEncoding:NSUTF8StringEncoding]];
-
-    Manufacturer = [self get_manufacturer_name:ManufData];
-
-    [manufName setStringValue:[NSString stringWithFormat:@"%s", Manufacturer]];
-
-    dataValueList = [dataArray arrangedObjects];
-    dataValueEntry = [dataValueList objectAtIndex:1];
-
-    Model = ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:0]] cStringUsingEncoding:NSUTF8StringEncoding]] + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:1]] cStringUsingEncoding:NSUTF8StringEncoding]] << 8));
-
-    [model setStringValue:[NSString stringWithFormat:@"%X", Model]];
-
-    Serial = ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:2]] cStringUsingEncoding:NSUTF8StringEncoding]] + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:3]] cStringUsingEncoding:NSUTF8StringEncoding]] << 8)  + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:4]] cStringUsingEncoding:NSUTF8StringEncoding]] << 16) + ([self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:5]] cStringUsingEncoding:NSUTF8StringEncoding]] << 24));
-
-    [serial setStringValue:[NSString stringWithFormat:@"%lX", Serial]];
-
-    buildWY[0] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:6]] cStringUsingEncoding:NSUTF8StringEncoding]];
-    buildWY[1] = [self hex2uchar:[[dataValueEntry objectForKey:[self determineColumnName:7]] cStringUsingEncoding:NSUTF8StringEncoding]];
-
-    if ((buildWY[0] < 55) || (buildWY[1] == 0xff))
-    {
-        if (buildWY[1] > 0x0f)
-        {
-            if (buildWY[0] == 0xff)
-            {
-                [buildWeek setStringValue:[NSString stringWithFormat:@"%hhu", buildWY[0]]];
-                [buildYear setStringValue:[NSString stringWithFormat:@"%hhu", buildWY[1]]];
-            } else {
-                [buildWeek setStringValue:[NSString stringWithFormat:@"%hhu", buildWY[0]]];
-                [buildYear setStringValue:[NSString stringWithFormat:@"%u", (buildWY[1] + 1990)]];
-            }
-        }
-    }
 }
 
 -(void)readDataTable:(NSString **)data offset:(int)startpos length:(int)totallength
@@ -3801,7 +3801,7 @@ ColorRender *colorView = nil;
 
 -(void)setEDIDRow:(unsigned char *)data start:(int)strt count:(int)cnt
 {
-    unsigned char dataval[10];
+    unsigned char dataval[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     if (cnt >= 10)
     {

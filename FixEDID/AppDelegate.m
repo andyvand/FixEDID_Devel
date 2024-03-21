@@ -130,7 +130,6 @@ int LEDDevice = 37430;
 - (void)DetermineAspectRatio
 {
     unsigned char *descriptor = NULL;
-    NSString *DevCerts = @"-K";
     int hres = 0;
     int vres = 0;
     int gcd = 0;
@@ -491,85 +490,86 @@ int LEDDevice = 37430;
 {
     BOOL DescriptorSet = NO;
     char CopyPath[512];
-    char CopyCSPath[512];
+    char signtool[512];
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
     NSError *err;
     NSAlert *alert;
     NSString *errorstring;
 #endif
-    NSString *DevCerts = [NSString stringWithFormat:@"-K%@", [[[NSBundle mainBundle] resourcePath] stringsByAppendingPaths:@"DevCerts.p12"]];
+    NSString *DevCerts = [NSString stringWithFormat:@"-K%@", [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"DevCerts.p12"]];
+    NSString *kextPath = nil;
     EDIDStructure = (EDIDStruct_t *)EData;
-
+    
     if ((!memcmp(EDIDStructure->Header, EDID_Header, sizeof(EDID_Header))) && (ESize > 0))
     {
         EDIDFileOpened = YES;
     } else {
         EDIDFileOpened = NO;
     }
-
+    
     if (EDIDFileOpened == NO)
     {
         runAlertPanel(@"Couldn't run!", @"Open an EDID file first!", @"OK", nil, nil);
-
+        
         return;
     }
-
+    
     switch(PanelSelected)
     {
         case 0:
-
+            
             FixMonitorRangesInteger = [FixMonitorRangesButton state];
-
+            
             if (FixMonitorRangesInteger == YES)
             {
                 [self FixRanges];
             }
             
             EDIDStructure->Checksum = [self make_checksum:(unsigned char *)EData];
-
+            
             if (ResCnt > 0)
             {
                 IOProviderMergeProperties = [ NSDictionary dictionaryWithObjectsAndKeys:[NSData dataWithBytes:EData length:ESize], @"IODisplayEDID", ResDataArray, @"scale-resolutions", nil ];
             } else {
                 IOProviderMergeProperties = [ NSDictionary dictionaryWithObjectsAndKeys:[NSData dataWithBytes:EData length:ESize], @"IODisplayEDID", nil ];
             }
-
+            
             DeviceNumber = [NSNumber numberWithInt:[DeviceDecID intValue]];
             VendorNumber = [NSNumber numberWithInt:[VendorDecID intValue]];
             
             break;
-
+            
         case 1:
             memcpy(EDIDStructure->Serial, iMac_serial, sizeof(iMac_serial));
             memcpy(EDIDStructure->Chroma, iMac_chroma, sizeof(iMac_chroma));
             memcpy(EDIDStructure->BasicParams, iMac_BaseParms, sizeof(iMac_BaseParms));
             memcpy(EDIDStructure->Version, Version_1_4, sizeof(Version_1_4));
-
+            
             if ([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 1)
             {
                 memcpy(EDIDStructure->Descriptor1, iMac_descriptor, sizeof(iMac_descriptor));
                 DescriptorSet = YES;
             }
-
+            
             if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor2] == 1) && (DescriptorSet == NO))
             {
                 memcpy(EDIDStructure->Descriptor2, iMac_descriptor, sizeof(iMac_descriptor));
                 DescriptorSet = YES;
             }
-
+            
             if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor3] == 1) && (DescriptorSet == NO))
             {
                 memcpy(EDIDStructure->Descriptor3, iMac_descriptor, sizeof(iMac_descriptor));
                 DescriptorSet = YES;
             }
-
+            
             if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor4] == 1) && (DescriptorSet == NO))
             {
                 memcpy(EDIDStructure->Descriptor4, iMac_descriptor, sizeof(iMac_descriptor));
                 DescriptorSet = YES;
             }
-
-
+            
+            
             if ([self ScanForOtherDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 1)
             {
                 memcpy(EDIDStructure->Descriptor1, iMac_descriptor, sizeof(iMac_descriptor));
@@ -593,7 +593,7 @@ int LEDDevice = 37430;
                 memcpy(EDIDStructure->Descriptor4, iMac_descriptor, sizeof(iMac_descriptor));
                 DescriptorSet = YES;
             }
-
+            
             if (DescriptorSet == NO)
             {
                 if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor4] == 0) &&
@@ -604,7 +604,7 @@ int LEDDevice = 37430;
                     memcpy(EDIDStructure->Descriptor4, iMac_descriptor, sizeof(iMac_descriptor));
                     DescriptorSet = YES;
                 }
-
+                
                 if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor3] == 0) &&
                     ([self ScanForSerialDescriptor:(unsigned char *)EDIDStructure->Descriptor3] == 0) &&
                     ([self ScanForRangeDescriptor:(unsigned char *)EDIDStructure->Descriptor3] == 0) &&
@@ -613,7 +613,7 @@ int LEDDevice = 37430;
                     memcpy(EDIDStructure->Descriptor3, iMac_descriptor, sizeof(iMac_descriptor));
                     DescriptorSet = YES;
                 }
-
+                
                 if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor2] == 0) &&
                     ([self ScanForSerialDescriptor:(unsigned char *)EDIDStructure->Descriptor2] == 0) &&
                     ([self ScanForRangeDescriptor:(unsigned char *)EDIDStructure->Descriptor2] == 0) &&
@@ -622,7 +622,7 @@ int LEDDevice = 37430;
                     memcpy(EDIDStructure->Descriptor2, iMac_descriptor, sizeof(iMac_descriptor));
                     DescriptorSet = YES;
                 }
-
+                
                 if (([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 0) &&
                     ([self ScanForSerialDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 0) &&
                     ([self ScanForRangeDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 0) &&
@@ -630,23 +630,23 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, iMac_descriptor, sizeof(iMac_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
-
+            
             FixMonitorRangesInteger = [FixMonitorRangesButton state];
-
+            
             if (FixMonitorRangesInteger == YES)
             {
                 [self FixRanges];
             }
-
+            
             EDIDStructure->Checksum = [self make_checksum:(unsigned char *)EData];
-
+            
             DeviceNumber = [NSNumber numberWithInt:iMacDevice];
             VendorNumber = [NSNumber numberWithInt:iMacVendor];
-
+            
             if (ResCnt > 0)
             {
                 if (displayclass == 2)
@@ -663,15 +663,15 @@ int LEDDevice = 37430;
                     IOProviderMergeProperties = [ NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:iMacDevice], @"DisplayProductID", [NSNumber numberWithInt:iMacVendor], @"DisplayVendorID", [NSNumber numberWithInt:2], @"AppleDisplayType", [NSNumber numberWithInt:1854], @"AppleSense", [NSData dataWithBytes:EData length:ESize], @"IODisplayEDID", [NSData dataWithBytes:iMac_DPCAP length:strlen(iMac_DPCAP)], @"IODisplayCapabilityString", [NSData dataWithBytes:iMac_CFlags length:sizeof(iMac_CFlags)], @"IODisplayConnectFlags", [NSData dataWithBytes:iMac_CTRL_FL length:sizeof(iMac_CTRL_FL)], @"IODisplayControllerID", [NSData dataWithBytes:iMac_CTRL_FL length:sizeof(iMac_CTRL_FL)], @"IODisplayFirmwareLevel", [NSData dataWithBytes:iMac_MCSS length:sizeof(iMac_MCSS)], @"IODisplayMCCSVersion", [NSData dataWithBytes:iMac_TechT length:sizeof(iMac_TechT)], @"IODisplayTechnologyType", [[[DisplayPrefsKey stringValue] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-610-a012", displayclassoverride]], @"IODisplayPrefsKey", displayclassoverride, @"IOClass",  nil ];
                 }
             }
-
+            
             break;
-
+            
         case 2:
             memcpy(EDIDStructure->Serial, MBP_serial, sizeof(MBP_serial));
             memcpy(EDIDStructure->Chroma, MBP_chroma, sizeof(MBP_chroma));
             memcpy(EDIDStructure->BasicParams, MBP_BaseParms, sizeof(MBP_BaseParms));
             memcpy(EDIDStructure->Version, Version_1_4, sizeof(Version_1_4));
-
+            
             if ([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 1)
             {
                 memcpy(EDIDStructure->Descriptor1, MBP_descriptor, sizeof(MBP_descriptor));
@@ -757,23 +757,23 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, MBP_descriptor, sizeof(MBP_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
-
+            
             FixMonitorRangesInteger = [FixMonitorRangesButton state];
             
             if (FixMonitorRangesInteger == YES)
             {
                 [self FixRanges];
             }
-
+            
             EDIDStructure->Checksum = [self make_checksum:(unsigned char *)EData];
             
             DeviceNumber = [NSNumber numberWithInt:MBPDevice];
             VendorNumber = [NSNumber numberWithInt:MBPVendor];
-
+            
             if (ResCnt > 0)
             {
                 if (displayclass == 2)
@@ -790,15 +790,15 @@ int LEDDevice = 37430;
                     IOProviderMergeProperties = [ NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:MBPDevice], @"DisplayProductID", [NSNumber numberWithInt:MBPVendor], @"DisplayVendorID", [NSNumber numberWithLongLong:436849163854938112], @"IODisplayGUID", [NSData dataWithBytes:EData length:ESize], @"IODisplayEDID", [NSData dataWithBytes:MBP_CFLAGS length:sizeof(MBP_CFLAGS)], @"IODisplayConnectFlags" , [[[DisplayPrefsKey stringValue] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-610-a014", displayclassoverride]], @"IODisplayPrefsKey", displayclassoverride, @"IOClass", nil ];
                 }
             }
-
+            
             break;
-
+            
         case 3:
             memcpy(EDIDStructure->Serial, CHD_serial, sizeof(CHD_serial));
             memcpy(EDIDStructure->Chroma, CHD_chroma, sizeof(CHD_chroma));
             memcpy(EDIDStructure->BasicParams, CHD_BaseParms, sizeof(CHD_BaseParms));
             memcpy(EDIDStructure->Version, Version_1_4, sizeof(Version_1_4));
-
+            
             if ([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 1)
             {
                 memcpy(EDIDStructure->Descriptor1, CHD_name_descriptor, sizeof(CHD_name_descriptor));
@@ -884,13 +884,13 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, CHD_name_descriptor, sizeof(CHD_name_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
-
+            
             DescriptorSet = NO;
-
+            
             if ([self ScanForSerialDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 1)
             {
                 memcpy(EDIDStructure->Descriptor1, CHD_serial_descriptor, sizeof(CHD_serial_descriptor));
@@ -976,23 +976,23 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, CHD_serial_descriptor, sizeof(CHD_serial_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
-
+            
             FixMonitorRangesInteger = [FixMonitorRangesButton state];
             
             if (FixMonitorRangesInteger == YES)
             {
                 [self FixRanges];
             }
-
+            
             EDIDStructure->Checksum = [self make_checksum:(unsigned char *)EData];
             
             DeviceNumber = [NSNumber numberWithInt:CHDDevice];
             VendorNumber = [NSNumber numberWithInt:CHDVendor];
-
+            
             if (ResCnt > 0)
             {
                 if (displayclass == 2)
@@ -1009,15 +1009,15 @@ int LEDDevice = 37430;
                     IOProviderMergeProperties = [ NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:CHDDevice], @"DisplayProductID", [NSNumber numberWithInt:CHDVendor], @"DisplayVendorID", [NSNumber numberWithInt:2], @"AppleDisplayType", [NSNumber numberWithInt:36864], @"AppleSense", [NSData dataWithBytes:EData length:ESize], @"IODisplayEDID", [NSData dataWithBytes:CHD_CFLAGS length:sizeof(CHD_CFLAGS)], @"IODisplayConnectFlags" , [[[DisplayPrefsKey stringValue] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-610-9223", displayclassoverride]], @"IODisplayPrefsKey", displayclassoverride, @"IOClass", nil ];
                 }
             }
-
+            
             break;
-
+            
         case 4:
             memcpy(EDIDStructure->Serial, TDB_serial, sizeof(TDB_serial));
             memcpy(EDIDStructure->Chroma, TDB_chroma, sizeof(TDB_chroma));
             memcpy(EDIDStructure->BasicParams, TDB_BaseParms, sizeof(TDB_BaseParms));
             memcpy(EDIDStructure->Version, Version_1_4, sizeof(Version_1_4));
-
+            
             if ([self ScanForNameDescriptor:(unsigned char *)EDIDStructure->Descriptor1] == 1)
             {
                 memcpy(EDIDStructure->Descriptor1, TDB_name_descriptor, sizeof(TDB_name_descriptor));
@@ -1103,7 +1103,7 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, TDB_name_descriptor, sizeof(TDB_name_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
@@ -1195,23 +1195,23 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, TDB_serial_descriptor, sizeof(TDB_serial_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
-
+            
             FixMonitorRangesInteger = [FixMonitorRangesButton state];
             
             if (FixMonitorRangesInteger == YES)
             {
                 [self FixRanges];
             }
-
+            
             EDIDStructure->Checksum = [self make_checksum:(unsigned char *)EData];
             
             DeviceNumber = [NSNumber numberWithInt:TDBDevice];
             VendorNumber = [NSNumber numberWithInt:TDBVendor];
-
+            
             if (ResCnt > 0)
             {
                 if (displayclass == 2)
@@ -1228,9 +1228,9 @@ int LEDDevice = 37430;
                     IOProviderMergeProperties = [ NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:TDBDevice], @"DisplayProductID", [NSNumber numberWithInt:TDBVendor], @"DisplayVendorID", [NSNumber numberWithInt:371392543], @"DisplaySerialNumber", [NSData dataWithBytes:EData length:ESize], @"IODisplayEDID", [NSData dataWithBytes:TDB_DPCAP length:strlen(TDB_DPCAP)], @"IODisplayCapabilityString", [NSData dataWithBytes:TDB_CFLAGS length:sizeof(TDB_CFLAGS)], @"IODisplayConnectFlags", [NSData dataWithBytes:TDB_CTRL length:sizeof(TDB_CTRL)], @"IODisplayControllerID", [NSData dataWithBytes:TDB_FL length:sizeof(TDB_FL)], @"IODisplayFirmwareLevel", [NSData dataWithBytes:TDB_MCSS length:sizeof(TDB_MCSS)], @"IODisplayMCCSVersion", [NSData dataWithBytes:TDB_TechT length:sizeof(TDB_TechT)], @"IODisplayTechnologyType", [[[DisplayPrefsKey stringValue] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-610-9227", displayclassoverride]], @"IODisplayPrefsKey", displayclassoverride, @"IOClass", nil ];
                 }
             }
-
-        break;
-
+            
+            break;
+            
         case 5:
             memcpy(EDIDStructure->Serial, LED_serial, sizeof(LED_serial));
             memcpy(EDIDStructure->Chroma, LED_chroma, sizeof(LED_chroma));
@@ -1322,7 +1322,7 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, LED_name_descriptor, sizeof(LED_name_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
@@ -1414,23 +1414,23 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, LED_serial_descriptor, sizeof(LED_serial_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
-
+            
             FixMonitorRangesInteger = [FixMonitorRangesButton state];
             
             if (FixMonitorRangesInteger == YES)
             {
                 [self FixRanges];
             }
-
+            
             EDIDStructure->Checksum = [self make_checksum:(unsigned char *)EData];
             
             DeviceNumber = [NSNumber numberWithInt:CHDDevice];
             VendorNumber = [NSNumber numberWithInt:CHDVendor];
-
+            
             if (ResCnt > 0)
             {
                 if (displayclass == 2)
@@ -1449,20 +1449,20 @@ int LEDDevice = 37430;
             }
             
             break;
-
+            
         case 6:
-
+            
             memcpy(EDIDStructure->Chroma, iMac_chroma, sizeof(iMac_chroma));
-
+            
             FixMonitorRangesInteger = [FixMonitorRangesButton state];
-
+            
             if (FixMonitorRangesInteger == YES)
             {
                 [self FixRanges];
             }
             
             EDIDStructure->Checksum = [self make_checksum:(unsigned char *)EData];
-
+            
             if (ResCnt > 0)
             {
                 IOProviderMergeProperties = [ NSDictionary dictionaryWithObjectsAndKeys:[NSData dataWithBytes:EData length:ESize], @"IODisplayEDID", ResDataArray, @"scale-resolutions", nil ];
@@ -1474,7 +1474,7 @@ int LEDDevice = 37430;
             VendorNumber = [NSNumber numberWithInt:[VendorDecID intValue]];
             
             break;
-
+            
         case 7:
             memcpy(EDIDStructure->Serial, iMac_serial, sizeof(iMacRetina_serial));
             memcpy(EDIDStructure->Chroma, iMac_chroma, sizeof(iMacRetina_chroma));
@@ -1557,7 +1557,7 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor2, iMacRetina_descriptor, sizeof(iMacRetina_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
                 
@@ -1568,7 +1568,7 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, iMacRetina_descriptor, sizeof(iMacRetina_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
@@ -1603,7 +1603,7 @@ int LEDDevice = 37430;
             }
             
             break;
-
+            
         case 8:
             memcpy(EDIDStructure->Serial, MBA_serial, sizeof(MBA_serial));
             memcpy(EDIDStructure->Chroma, MBA_chroma, sizeof(MBA_chroma));
@@ -1695,7 +1695,7 @@ int LEDDevice = 37430;
                 {
                     memcpy(EDIDStructure->Descriptor1, MBA_descriptor, sizeof(MBA_descriptor));
                     DescriptorSet = YES;
-
+                    
                     printf("Descriptor set: %u\n", (unsigned int)DescriptorSet);
                 }
             }
@@ -1731,21 +1731,22 @@ int LEDDevice = 37430;
             
             break;
     }
-
+    
     EDIDData = [NSData dataWithBytes:EData length:ESize];
-
+    
     if (ResCnt > 0)
     {
         EDIDOverride = [NSDictionary dictionaryWithObjectsAndKeys:DeviceNumber, @"DisplayProductID", VendorNumber, @"DisplayVendorID", EDIDData, @"IODisplayEDID", ResDataArray, @"scale-resolutions", nil];
     } else {
         EDIDOverride = [NSDictionary dictionaryWithObjectsAndKeys:DeviceNumber, @"DisplayProductID", VendorNumber, @"DisplayVendorID", EDIDData, @"IODisplayEDID", nil];
     }
-
+    
     DesktopPath = NSHomeDirectory();
     DesktopPath = [DesktopPath stringByAppendingPathComponent:@"Desktop"];
-
+    
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
     NewDisplayDriverPath = [DesktopPath stringByAppendingPathComponent:@"DisplayMergeNub.kext"];
+    kextPath = [DesktopPath stringByAppendingPathComponent:@"DisplayMergeNub.kext"];
     NewDisplayDriverPath = [NewDisplayDriverPath stringByAppendingPathComponent:@"Contents"];
     DriverBinCSTarget = [NewDisplayDriverPath stringByAppendingPathComponent:@"_CodeSignature"];
     DriverBinPath = [NewDisplayDriverPath stringByAppendingPathComponent:@"MacOS"];
@@ -1755,7 +1756,7 @@ int LEDDevice = 37430;
         errorstring = [err localizedDescription];
         errorstring = [errorstring stringByAppendingString:@"\n"];
         errorstring = [errorstring stringByAppendingString:[err localizedFailureReason]];
-
+        
         alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"OK"];
         [alert setIcon:[[NSApplication sharedApplication] applicationIconImage]];
@@ -1766,6 +1767,7 @@ int LEDDevice = 37430;
     }
 #else
     NewDisplayDriverPath = [DesktopPath stringByAppendingPathComponent:@"DisplayMergeNub.kext"];
+    kextPath = [DesktopPath stringByAppendingPathComponent:@"DisplayMergeNub.kext"];
     [[NSFileManager defaultManager] createDirectoryAtPath:NewDisplayDriverPath attributes:nil];
     NewDisplayDriverPath = [NewDisplayDriverPath stringByAppendingPathComponent:@"Contents"];
     [[NSFileManager defaultManager] createDirectoryAtPath:NewDisplayDriverPath attributes:nil];
@@ -1775,17 +1777,14 @@ int LEDDevice = 37430;
     DriverBinResPath = [DriverBinPath stringByAppendingPathComponent:@"DisplayMergeNub"];
     NewDisplayDriverPath = [NewDisplayDriverPath stringByAppendingPathComponent:@"Info.plist"];
 #endif
-
+    
     DriverBinResPath = [[NSBundle mainBundle] resourcePath];
     DriverBinCSPath = [DriverBinResPath stringByAppendingPathComponent:@"_CodeSignature"];
     DriverBinResPath = [DriverBinResPath stringByAppendingPathComponent:@"DisplayMergeNub"];
-
+    
     snprintf(CopyPath, sizeof(CopyPath), "/bin/cp -f \"%s\" \"%s\"", [DriverBinResPath cStringUsingEncoding:NSUTF8StringEncoding], [DriverBinPath cStringUsingEncoding:NSUTF8StringEncoding]);
     system(CopyPath);
-
-    snprintf(CopyCSPath, sizeof(CopyPath), "/bin/cp -Rf \"%s\" \"%s\"", [DriverBinCSPath cStringUsingEncoding:NSUTF8StringEncoding], [DriverBinCSTarget cStringUsingEncoding:NSUTF8StringEncoding]);
-    system(CopyCSPath);
-
+    
     NewEDIDPath = [DesktopPath stringByAppendingPathComponent:@"EDID-"];
     NewEDIDPath = [NewEDIDPath stringByAppendingString:[VendorID stringValue]];
     NewEDIDPath = [NewEDIDPath stringByAppendingString:@"-"];
@@ -1794,7 +1793,7 @@ int LEDDevice = 37430;
     
     NewDisplayOverridePath = [DesktopPath stringByAppendingPathComponent:@"DisplayVendorID-"];
     NewDisplayOverridePath = [NewDisplayOverridePath stringByAppendingString:[VendorID stringValue]];
-
+    
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
     if ([[NSFileManager defaultManager] createDirectoryAtPath:NewDisplayOverridePath withIntermediateDirectories:YES attributes:nil error:&err] == NO)
     {
@@ -1813,44 +1812,40 @@ int LEDDevice = 37430;
 #else
     [[NSFileManager defaultManager] createDirectoryAtPath:NewDisplayOverridePath attributes:nil];
 #endif
-
+    
     NewDisplayOverridePath = [NewDisplayOverridePath stringByAppendingPathComponent:@"DisplayProductID-"];
     NewDisplayOverridePath = [NewDisplayOverridePath stringByAppendingString:[DeviceID stringValue]];
-
+    
     [EDIDOverride writeToFile:NewDisplayOverridePath atomically:YES];
     [EDIDData writeToFile:NewEDIDPath atomically:YES];
-
+    
     IgnoreDisplayPrefsInteger = [IgnoreDisplayPrefsButton state];
-
+    
     if (IgnoreDisplayPrefsInteger == YES)
     {
         IgnoreDisplayPrefs = YES;
     } else {
         IgnoreDisplayPrefs = NO;
     }
-
+    
     if (displayclass == 2)
     {
         MonInjection = [NSDictionary dictionaryWithObjectsAndKeys:@"com.AnV.Software.driver.AppleMonitor", @"CFBundleIdentifier", @"DisplayMergeNub", @"IOClass", @"AppleBacklightDisplay", @"IOProviderClass", IOProviderMergeProperties, @"IOProviderMergeProperties", [NSNumber numberWithInt:[DeviceDecID intValue]], @"DisplayProductID", [NSNumber numberWithInt:[VendorDecID intValue]], @"DisplayVendorID", [NSNumber numberWithBool:IgnoreDisplayPrefs], @"IgnoreDisplayPrefs", [DisplayPrefsKey stringValue], @"IODisplayPrefsKey", nil];
     } else {
         MonInjection = [NSDictionary dictionaryWithObjectsAndKeys:@"com.AnV.Software.driver.AppleMonitor", @"CFBundleIdentifier", @"DisplayMergeNub", @"IOClass", @"AppleDisplay", @"IOProviderClass", IOProviderMergeProperties, @"IOProviderMergeProperties", [NSNumber numberWithInt:[DeviceDecID intValue]], @"DisplayProductID", [NSNumber numberWithInt:[VendorDecID intValue]], @"DisplayVendorID", [NSNumber numberWithBool:IgnoreDisplayPrefs], @"IgnoreDisplayPrefs", [DisplayPrefsKey stringValue], @"IODisplayPrefsKey", nil];
     }
-
+    
     IOKitPersonalities = [NSDictionary dictionaryWithObjectsAndKeys:MonInjection, @"Monitor Apple ID Injection", nil];
-
+    
     OSBundleLibraries = [NSDictionary dictionaryWithObjectsAndKeys:@"8.0.0b1", @"com.apple.kpi.bsd", @"8.0.0b1", @"com.apple.kpi.iokit", @"8.0.0b1", @"com.apple.kpi.libkern", nil];
-
+    
     DriverDict = [NSDictionary dictionaryWithObjectsAndKeys:@"English", @"CFBundleDevelopmentRegion", @"com.AnV.Software.driver.AppleMonitor", @"CFBundleIdentifier", @"DisplayMergeNub", @"CFBundleExecutable", @"6.0", @"CFBundleInfoDictionaryVersion", @"Display Injector", @"CFBundleName", @"KEXT", @"CFBundlePackageType", @"????", @"CFBundleSignature", @"9.9.9", @"CFBundleVersion", @"9.9.9", @"CFBundleShortVersionString", @"Copright (C) 2013 AnV Software", @"CFBundleGetInfoString", @"", @"DTCompiler", @"4G2008a", @"DTPlatformBuild", @"GM", @"DTPlatformVersion", @"12C37", @"DTSDKBuild", @"Custom", @"DTSDKName", @"0452", @"DTXcode" , @"4G2008a", @"DTXcodeBuild", OSBundleLibraries, @"OSBundleLibraries", IOKitPersonalities, @"IOKitPersonalities", @"Root", @"OSBundleRequired", @"8.8.8", @"OSBundleCompatibleVerson", nil];
     
-
+    
     [DriverDict writeToFile:NewDisplayDriverPath atomically:YES];
-
-    task = [NSTask  new];
-    pipe = [NSPipe pipe];
-    [task setLaunchPath:@"/bin/sh"];
-    [task setArguments:[NSArray arrayWithObjects:[[[NSBundle mainBundle] resourcePath] stringsByAppendingPaths:@"ldid"], DevCerts, @"-U274905", @"-s", NewDisplayDriverPath , nil]];
-    [task setStandardOutput:pipe];
-    [task launch];
+    
+    snprintf(signtool, sizeof(signtool), "%s %s -U274905 -s %s", [[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ldid"] cStringUsingEncoding:NSUTF8StringEncoding], [DevCerts cStringUsingEncoding:NSUTF8StringEncoding], [kextPath cStringUsingEncoding:NSUTF8StringEncoding]);
+    system(signtool);
 }
 
 -(void)SetRawEDID:(id)sender
