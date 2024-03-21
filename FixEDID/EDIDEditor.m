@@ -3721,6 +3721,7 @@ ColorRender *colorView = nil;
         [self getBasicParams];
 
         [editView setDocumentView:[basicParamsView retain]];
+        [editView display];
 
         return;
     }
@@ -3730,6 +3731,7 @@ ColorRender *colorView = nil;
         [self getChroma];
 
         [editView setDocumentView:[chromaView retain]];
+        [editView display];
 
         return;
     }
@@ -3739,6 +3741,7 @@ ColorRender *colorView = nil;
         [self getEstaRes];
 
         [editView setDocumentView:[estaResView retain]];
+        [editView display];
 
         return;
     }
@@ -3748,6 +3751,7 @@ ColorRender *colorView = nil;
         [self getStandardRes];
 
         [editView setDocumentView:[standardResView retain]];
+        [editView display];
 
         return;
     }
@@ -3759,6 +3763,7 @@ ColorRender *colorView = nil;
         [self getDetailedType];
 
         [editView setDocumentView:[detailedView retain]];
+        [editView display];
 
         return;
     }
@@ -3770,7 +3775,8 @@ ColorRender *colorView = nil;
         [self getDetailedType];
 
         [editView setDocumentView:[detailedView retain]];
-        
+        [editView display];
+
         return;
     }
 
@@ -3781,7 +3787,8 @@ ColorRender *colorView = nil;
         [self getDetailedType];
 
         [editView setDocumentView:[detailedView retain]];
-        
+        [editView display];
+
         return;
     }
 
@@ -3792,11 +3799,13 @@ ColorRender *colorView = nil;
         [self getDetailedType];
 
         [editView setDocumentView:[detailedView retain]];
-        
+        [editView display];
+
         return;
     }
 
     [editView setDocumentView:[emptyView retain]];
+    [editView display];
 }
 
 -(void)setEDIDRow:(unsigned char *)data start:(int)strt count:(int)cnt

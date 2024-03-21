@@ -16,7 +16,7 @@
 
 extern NSInteger runAlertPanel(NSString *title, NSString *message, NSString *button1, NSString *button2, NSString *button3);
 
-@interface EDIDEditor : NSObject
+@interface EDIDEditor : NSObject <NSTableViewDelegate>
 {
     IBOutlet NSArrayController *dataArray;
     IBOutlet NSTableView *dataTable;

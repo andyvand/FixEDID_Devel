@@ -16,9 +16,13 @@
 		<data>
 		2Vm7acCqu9uhBDRcunfbB/2o/2E=
 		</data>
-		<key>Resources/EDIDEditor.nib</key>
+		<key>Resources/EDIDEditor.nib/keyedobjects-101300.nib</key>
 		<data>
-		IU/Ip5ZKfTA/qKbppv030TWvSKc=
+		Ui4TeZx3i56ZAhA0Pt6BSCzs4vw=
+		</data>
+		<key>Resources/EDIDEditor.nib/keyedobjects-110000.nib</key>
+		<data>
+		+UaA85qI1SzbofCT8sKDIqNC1hg=
 		</data>
 		<key>Resources/FixEDID.help/index.html</key>
 		<data>
@@ -114,11 +118,18 @@
 			q6mD2bJXEVl5U90acfhNDW3mkxrGE8Sa60uYc56DLwg=
 			</data>
 		</dict>
-		<key>Resources/EDIDEditor.nib</key>
+		<key>Resources/EDIDEditor.nib/keyedobjects-101300.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dtG9sJFtnTiXcmrfe73E0V9Xbz3RLqMaoc8wbhGk5YE=
+			37l65KDHRuefY1immCqPrMv83LGbH51HT1bBe444sSU=
+			</data>
+		</dict>
+		<key>Resources/EDIDEditor.nib/keyedobjects-110000.nib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Xpzq/RhKDI3bBAJ5LL/EUDw5mGTPAxu1hnWrwb/ktoQ=
 			</data>
 		</dict>
 		<key>Resources/FixEDID.help/index.html</key>
