@@ -250,11 +250,11 @@
                         <rect key="frame" x="20" y="241" width="432" height="170"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="gcF-SV-qfR">
-                            <rect key="frame" x="1" y="1" width="430" height="168"/>
+                            <rect key="frame" x="1" y="1" width="430" height="153"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Kqy-Qf-Xlr">
-                                    <rect key="frame" x="0.0" y="0.0" width="430" height="168"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="439" height="153"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -291,7 +291,7 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexB" id="Z45-fW-cd9"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="10" minWidth="10" maxWidth="3.4028234663852886e+38" id="2QI-5W-jK2">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="2QI-5W-jK2">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="2">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -306,7 +306,7 @@
                                                 <binding destination="URb-Ab-VxH" name="value" keyPath="arrangedObjects.HexC" id="Dfz-FE-nU4"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn width="32" minWidth="10" maxWidth="3.4028234663852886e+38" id="174-kM-hVL">
+                                        <tableColumn width="40" minWidth="40" maxWidth="3.4028234663852886e+38" id="174-kM-hVL">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="3">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -413,13 +413,13 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <action selector="setEDIDDetailView:" target="raJ-ec-2jQ" id="Tby-rQ-p8q"/>
+                                        <action selector="setEDIDDetailView:" target="raJ-ec-2jQ" id="oya-3o-XT7"/>
                                     </connections>
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="L1X-4u-jwH">
-                            <rect key="frame" x="-7" y="-14" width="0.0" height="15"/>
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="L1X-4u-jwH">
+                            <rect key="frame" x="1" y="154" width="430" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="tLy-QA-3xW">
