@@ -262,6 +262,7 @@ extern NSInteger runAlertPanel(NSString *title, NSString *message, NSString *but
 -(NSString *)determineColumnName:(int)column;
 -(unsigned char)hex2uchar:(const char *)s;
 -(int)hex2int:(const char *)s;
++(void)loadEDIDEditor:(id)sender;
 -(void)setEDIDRow:(unsigned char *)data start:(int)strt count:(int)cnt;
 -(void)loadEDIDData;
 -(void)getHeader;

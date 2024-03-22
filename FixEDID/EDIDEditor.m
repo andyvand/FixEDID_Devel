@@ -3298,6 +3298,17 @@ ColorRender *colorView = nil;
     [self getCVT3B];
 }
 
++(void)loadEDIDEditor:(id)sender
+{
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101100
+    [[NSBundle mainBundle] loadNibFile:@"EDIDEditor" externalNameTable:nil withZone:nil];
+#elif MAC_OS_X_VERSION_MIN_REQUIRED >= 0x1080
+    [[NSBundle mainBundle] loadNibNamed:@"EDIDEditor" owner:self topLevelObjects:nil];
+#else
+    [NSBundle loadNibNamed:@"EDIDEditor" owner:self];
+#endif
+}
+
 -(void)getDetailedType
 {
     NSString *detailCode[4];
